@@ -183,6 +183,45 @@ class TestProductRoutes(TestCase):
         data = response.get_json()
         self.assertIn("was not found", data["message"])
 
+    def test_update_product(self):
+        """It should Update a Product thats not found"""
+        test_product = ProductFactory()
+        # response = self.client.get(f"{BASE_URL}/{test_product}").serialize()
+        response = self.client.post(BASE_URL, json=test_product.serialize())
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # UPDATE THE PRODUCT
+        data = response.get_json()
+        data["description"] = "unknown"
+        update_response = self.client.put(f"{BASE_URL}/{data['id']}", json=data)
+        self.assertEqual(update_response.status_code, status.HTTP_200_OK)
+        update_data = update_response.get_json()
+        self.assertEqual(update_data["description"], "unknown")
+
+    def test_delete_product(self):
+        """It should Delete a Product thats not found"""
+        test_products = self._create_products(5)
+        # response = self.client.get(f"{BASE_URL}/{test_products.id}")
+        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        test_products_count = self.get_product_count()
+        test_product = test_products[0]
+        
+        response = self.client.delete(f"{BASE_URL}/{test_product.id}")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(len(response.data), 0)
+
+        response = self.client.get(f"{BASE_URL}/{test_product.id}")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        new_count = self.get_product_count()
+        self.assertEqual(new_count, test_products_count - 1)
+
+    def test_get_product_list(self):
+        """It should Get a list of Products"""
+        self._create_products(5)
+        response = self.client.get(BASE_URL)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        data = response.get_json()
+        self.assertEqual(len(data), 5)
+
     ######################################################################
     # Utility functions
     ######################################################################
