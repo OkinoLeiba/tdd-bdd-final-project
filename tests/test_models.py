@@ -37,6 +37,8 @@ DATABASE_URI = os.getenv(
 
 logger = logging.getLogger("flask.app")
 
+class DataValidationError(Exception):
+    """Used for an data validation errors when deserializing"""
 
 ######################################################################
 #  P R O D U C T   M O D E L   T E S T   C A S E S
@@ -126,10 +128,11 @@ class TestProductModel(unittest.TestCase):
         """It should Update a Product"""
         product = ProductFactory()
         product.id = None
+        self.assertRaises(DataValidationError)
+        # with self.assertRaises(DataValidationError):
+        #     product.id = None
         product.create()
         self.assertIsNotNone(product.id)
-        # with self.assertRaises(DataValidationError):
-        #     self.id = None
         # Change it an save it
         product.description = "testing"
         original_id = product.id

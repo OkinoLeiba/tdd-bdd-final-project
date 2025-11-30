@@ -55,10 +55,10 @@ def step_impl(context):
             'name': row["name"], 
             'description': row['description'], 
             'price': row['price'], 
-            'availability': row['availability'], 
+            'available': row['available'] in ['True', 'true', '1'], 
             'category': row['category']
         }
         # send a POST request to the REST endpoint.
         context.resp = requests.post(rest_endpoint, json=payload)
         # assert that the HTTP status code of the response is equal to 201.
-        assert.context.resp.status_code == HTTP_201_CREATED
+        assert context.resp.status_code == HTTP_201_CREATED

@@ -101,14 +101,14 @@ def create_products():
 #
 # PLACE YOUR CODE TO LIST ALL PRODUCTS HERE
 #
-@app.route("/products", methods=["GET"])
-def list_products():
-    """Returns a list of Products"""
-    app.logger.info("Request to list Products...")
-    products = Product.all()
-    results = [product.serialize() for product in products]
-    app.logger.info("[%s] Products returned", len(results))
-    return results, status.HTTP_200_OK
+# @app.route("/products", methods=["GET"])
+# def list_products():
+#     """Returns a list of Products"""
+#     app.logger.info("Request to list Products...")
+#     products = Product.all()
+#     results = [product.serialize() for product in products]
+#     app.logger.info("[%s] Products returned", len(results))
+#     return results, status.HTTP_200_OK
 
 
 
@@ -167,7 +167,6 @@ def update_products(product_id):
 # D E L E T E   A   P R O D U C T
 ######################################################################
 
-
 #
 # PLACE YOUR CODE TO DELETE A PRODUCT HERE
 #
@@ -188,53 +187,53 @@ def delete_products(product_id):
 ######################################################################
 # LIST PRODUCTS
 ######################################################################
-@app.route("/products", methods=["GET"])
-def list_products_by_name():
-    """Returns a list of Products"""
-    app.logger.info("Request to list Products...")
-    products = []
-    name = request.args.get("name")
-    if name:
-        app.logger.info("Find by name: %s", name)
-        products = Product.find_by_name(name)
-    else:
-        app.logger.info("Find all")
-        products = Product.all()
+# @app.route("/products", methods=["GET"])
+# def list_products_by_name():
+#     """Returns a list of Products"""
+#     app.logger.info("Request to list Products...")
+#     products = []
+#     name = request.args.get("name")
+#     if name:
+#         app.logger.info("Find by name: %s", name)
+#         products = Product.find_by_name(name)
+#     else:
+#         app.logger.info("Find all")
+#         products = Product.all()
 
-    results = [product.serialize() for product in products]
-    app.logger.info("[%s] Products returned", len(results))
-    return results, status.HTTP_200_OK
+#     results = [product.serialize() for product in products]
+#     app.logger.info("[%s] Products returned", len(results))
+#     return results, status.HTTP_200_OK
 
 
 ######################################################################
 # LIST PRODUCTS BY CATEGORY
 ######################################################################
-@app.route("/products", methods=["GET"])
-def list_products_by_category():
-    """Returns a list of Products"""
-    app.logger.info("Request to list Products by catergory...")
+# @app.route("/products", methods=["GET"])
+# def list_products_by_category():
+#     """Returns a list of Products"""
+#     app.logger.info("Request to list Products by catergory...")
 
-    products = []
-    name = request.args.get("name")
-    category = request.args.get("category")
+#     products = []
+#     name = request.args.get("name")
+#     category = request.args.get("category")
 
-    # category_value = cat
+#     # category_value = cat
 
-    if name:
-        app.logger.info("Find by name: %s", name)
-        products = Product.find_by_name(name)
-    elif category:
-        app.logger.info("Find by category: %s", category)
-        # create enum from string
-        category_value = getattr(Category, category.upper())
-        products = Product.find_by_category(category_value)
-    else:
-        app.logger.info("Find all")
-        products = Product.all()
+#     if name:
+#         app.logger.info("Find by name: %s", name)
+#         products = Product.find_by_name(name)
+#     elif category:
+#         app.logger.info("Find by category: %s", category)
+#         # create enum from string
+#         category_value = getattr(Category, category.upper())
+#         products = Product.find_by_category(category_value)
+#     else:
+#         app.logger.info("Find all")
+#         products = Product.all()
 
-    results = [product.serialize() for product in products]
-    app.logger.info("[%s] Products returned", len(results))
-    return results, status.HTTP_200_OK
+#     results = [product.serialize() for product in products]
+#     app.logger.info("[%s] Products returned", len(results))
+#     return results, status.HTTP_200_OK
 
 
 ######################################################################
