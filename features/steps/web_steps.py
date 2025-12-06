@@ -144,7 +144,8 @@ def step_impl(context, button):
 def step_impl(context, name):
     # Use the WebDriverWait to wait for the specified name to be present in the element with the ID 'search_results
     element = WebDriverWait(context.driver, context.wait_seconds).until(
-        expected_conditions.text_to_be_present_in_element_value((By.ID, 'search_results'), name)
+        expected_conditions.text_to_be_present_in_element(
+            (By.ID, 'search_results'), name)
     )
     # Check if the provided name is present in the text content of the element using the expected_conditions.text_to_be_present_in_element method
     # Use the assert(found) statement to verify the name was found in the results.

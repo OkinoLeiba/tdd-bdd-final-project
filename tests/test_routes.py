@@ -137,8 +137,8 @@ class TestProductRoutes(TestCase):
         #
 
         # # Check that the location header was correct
-        # response = self.client.get(location)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = self.client.get(location)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         # new_product = response.get_json()
         # self.assertEqual(new_product["name"], test_product.name)
         # self.assertEqual(new_product["description"], test_product.description)
@@ -177,7 +177,8 @@ class TestProductRoutes(TestCase):
         data = response.get_json()
         self.assertEqual(data["name"], test_product.name)
 
-        
+
+
     def test_get_product_not_found(self):
         """It should not Get a Product thats not found"""
         response = self.client.get(f"{BASE_URL}/0")
@@ -259,7 +260,7 @@ class TestProductRoutes(TestCase):
     def test_query_by_availability(self):
         """It should Query Products by availability"""
         products = self._create_products(10)
-        available_products = [product for product in products if product.available is True]
+        available_products = [product for product in products if product.available is True]        
         available_count = len(available_products)        
         # test for available
         response = self.client.get(
@@ -276,7 +277,6 @@ class TestProductRoutes(TestCase):
     ######################################################################
     # Utility functions
     ######################################################################
-
     def get_product_count(self):
         """save the current number of products"""
         response = self.client.get(BASE_URL)

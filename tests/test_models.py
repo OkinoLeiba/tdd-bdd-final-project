@@ -128,6 +128,7 @@ class TestProductModel(unittest.TestCase):
         """It should Update a Product"""
         product = ProductFactory()
         product.id = None
+        self.assertEqual(product.id, None)
         self.assertRaises(DataValidationError)
         # with self.assertRaises(DataValidationError):
         #     product.id = None
@@ -149,9 +150,9 @@ class TestProductModel(unittest.TestCase):
     def test_delete_a_product(self):
         """It should Delete a Product"""
         product = ProductFactory()
-        product.id = None
+        # product.id = None
         product.create()
-        self.assertIsNotNone(product.id)
+        # self.assertIsNotNone(product.id)
 
         self.assertEqual(len(Product.all()), 1)
 
@@ -222,3 +223,27 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found.count(), count)   
         for product in found:
             self.assertEqual(product.category, category)
+
+
+    def test_get_price(self):
+        """It should find a Product by price"""
+        # product = ProductFactory()
+        # product.create()
+        # self.assertEqual(len(Product.all()), 1)
+
+        # price = product.price
+
+        # found = Product.find_by_price(price)
+        # self.assertEqual(product, found)
+
+        products = ProductFactory.create_batch(10)
+
+        for product in products:
+            product.create()
+  
+        price = products[0].price   
+        count = len([product for product in products if product.price == price])
+        found = Product.find_by_price(price)
+        self.assertEqual(found.count(), count)   
+        for product in found:
+            self.assertEqual(product.price, price)

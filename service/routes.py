@@ -123,9 +123,7 @@ def create_products():
 @app.route("/products/<int:product_id>", methods=["GET"])
 def get_products(product_id):
     """
-    Retrieve a single Product
-
-    This endpoint will return a Product based on it's id
+    Retrieve a single Product This endpoint will return a Product based on it's id
     """
     app.logger.info("Request to Retrieve a product with id [%s]", product_id)
 
